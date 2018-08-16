@@ -1,0 +1,31 @@
+{
+  "name": "emoji-patterns",
+  "version": "11.0.0",
+  "description": "Get emoji regular expression patterns from Unicode data files",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tonton-pixel/emoji-patterns.git"
+  },
+  "bugs": {
+    "url": "https://github.com/tonton-pixel/emoji-patterns/issues"
+  },
+  "homepage": "https://github.com/tonton-pixel/emoji-patterns",
+  "keywords": [
+    "emoji",
+    "patterns",
+    "regular expressions",
+    "regex",
+    "regexp",
+    "unicode",
+    "keyboard",
+    "display",
+    "fully-qualified",
+    "non-fully-qualified"
+  ],
+  "author": "Michel MARIANI",
+  "license": "MIT"
+}
