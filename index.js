@@ -16,7 +16,7 @@ function parseData ()
     //
     let dataPatterns = { };
     //
-    lines = fs.readFileSync (path.join ('data', 'emoji-data.txt'), { encoding: 'utf8' }).split ('\n');
+    lines = fs.readFileSync (path.join (__dirname, 'data', 'emoji-data.txt'), { encoding: 'utf8' }).split ('\n');
     for (let line of lines)
     {
         if ((line) && (line[0] !== '#'))
@@ -82,7 +82,7 @@ function parseData ()
     //
     let sequencesPatterns = { };
     //
-    lines = fs.readFileSync (path.join ('data', 'emoji-sequences.txt'), { encoding: 'utf8' }).split ('\n');
+    lines = fs.readFileSync (path.join (__dirname, 'data', 'emoji-sequences.txt'), { encoding: 'utf8' }).split ('\n');
     for (let line of lines)
     {
         if ((line) && (line[0] !== '#'))
@@ -111,7 +111,7 @@ function parseData ()
     //
     let zwjSequencesPatterns = { };
     //
-    lines = fs.readFileSync (path.join ('data', 'emoji-zwj-sequences.txt'), { encoding: 'utf8' }).split ('\n');
+    lines = fs.readFileSync (path.join (__dirname, 'data', 'emoji-zwj-sequences.txt'), { encoding: 'utf8' }).split ('\n');
     for (let line of lines)
     {
         if ((line) && (line[0] !== '#'))
