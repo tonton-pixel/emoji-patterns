@@ -1,25 +1,29 @@
 # Emoji Patterns
 
+## Description
+
+This NPM module returns a JSON-compatible object literal containing both basic and compound emoji pattern strings.
+
 ## Available Patterns
 
 The following patterns are generated using the information parsed from the Unicode emoji data files `emoji-data.txt`, `emoji-sequences.txt` and `emoji-zwj-sequences.txt`:
 
-- Emoji
-- Emoji_Component
-- Emoji_Flag_Sequence
-- Emoji_Keycap_Sequence
-- Emoji_Modifier
-- Emoji_Modifier_Base
-- Emoji_Modifier_Sequence
-- Emoji_Presentation
-- Emoji_Tag_Sequence
-- Emoji_ZWJ_Sequence
-- Extended_Pictographic
+- **Emoji**
+- **Emoji_Component**
+- **Emoji_Flag_Sequence**
+- **Emoji_Keycap_Sequence**
+- **Emoji_Modifier**
+- **Emoji_Modifier_Base**
+- **Emoji_Modifier_Sequence**
+- **Emoji_Presentation**
+- **Emoji_Tag_Sequence**
+- **Emoji_ZWJ_Sequence**
+- **Extended_Pictographic**
 
 These basic patterns are then used to generate two more complex compound patterns:
 
-- Emoji_All
-- Emoji_Keyboard
+- **Emoji_All**
+- **Emoji_Keyboard**
 
 ```javascript
 const
@@ -110,14 +114,14 @@ console.log (JSON.stringify ("AaĀā❤愛爱애💜".replace (emojiAllRegex, ""
 
 ## Caveats
 
-- The basic patterns strictly follow the information extracted from the data files. Therefore, the following characters are considered *Emoji* in the `emoji-data.txt` file, although they are omitted in the `emoji-test.txt` file, as well as in the CLDR annotation files:
+- The basic patterns strictly follow the information extracted from the data files. Therefore, the following characters are considered **Emoji** in the `emoji-data.txt` file, although they are omitted in the `emoji-test.txt` file, as well as in the CLDR annotation files provided in XML format:
 
     - 12 keycap bases: number sign '#', asterisk '*', digits '0' to '9'
     - 26 singleton regional indicators: '🇦' to '🇿'
 
 - The regular expressions *must* include a 'u' flag, since the patterns make use of the new type of Unicode escape sequences: `\u{1F4A9}`.
 
-- The two main regular expression patterns **Emoji_All** and **Emoji_Keyboard** are pretty big, around 40Kb...
+- The two main regular expression patterns **Emoji_All** and **Emoji_Keyboard** are pretty big, around 40Kb each...
 
 ## License
 
