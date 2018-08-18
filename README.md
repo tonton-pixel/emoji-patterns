@@ -2,7 +2,7 @@
 
 ## Description
 
-This NPM module returns a JSON-compatible object literal containing both basic and compound emoji pattern strings.
+This Node module returns a JSON-compatible object literal containing both basic and compound emoji pattern strings.
 
 ## Available Patterns
 
@@ -48,7 +48,17 @@ emojiPatterns["Emoji_Keyboard"] = `(?:${Emoji_ZWJ_Sequence}|${Emoji_Keycap_Seque
 // All emoji (U+FE0F optional)
 emojiPatterns["Emoji_All"] = emojiPatterns["Emoji_Keyboard"].replace (/(\\u{FE0F}|\\uFE0F)/gi, "$1?");
 ```
-Please note that the order of the basic patterns in the compound patterns is critical. Since a regular expression is greedy by default, the longest patterns must come first. The same strategy is also used when generating the **Emoji_ZWJ_Sequence** pattern itself.
+### Notes
+
+- The order of the basic patterns in the compound patterns is critical. Since a regular expression is greedy by default, the longest patterns must come first. The same strategy is also used when generating the **Emoji_ZWJ_Sequence** pattern itself.
+
+- In the compound patterns, `${Emoji_Modifier_Base}${Emoji_Modifier}` can be replaced by `${Emoji_Modifier_Sequence}` which is strictly equivalent (but more verbose).
+
+- Providing patterns as strings instead of regular expressions does require the extra step of using `new RegExp ()` to actually make use of them, but it has two main advantages:
+
+    - Flags can be set differently depending on how the patterns are used.
+
+    - The patterns can be further modified before being turned into regular expressions; for instance, unwanted sub-patterns can be discarded by replacing them with an empty string, or the pattern can be embedded into a larger one. See examples below.
 
 ## Installing
 
@@ -84,7 +94,17 @@ console.log (emojiKeyboardRegex.test ("❤"));
 ```javascript
 const emojiPatterns = require ('emoji-patterns');
 const emojiAllRegex = new RegExp (emojiPatterns["Emoji_All"], 'gu');
-console.log (JSON.stringify ("AaĀā❤愛爱애💜".match (emojiAllRegex)));
+console.log (JSON.stringify ("AaĀā#*0❤🇦愛爱애💜".match (emojiAllRegex)));
+// -> ["#","*","0","❤","🇦","💜"]
+```
+
+### Extracting all emoji from a string, except keycap bases and singleton regional indicators
+
+```javascript
+const emojiAllPattern = require ('emoji-patterns')["Emoji_All"];
+const customPattern = emojiAllPattern.replace (/\\u\{23\}\\u\{2A\}\\u\{30\}-\\u\{39\}|\\u\{1F1E6\}-\\u\{1F1FF\}/gi, "");
+const customRegex = new RegExp (customPattern, 'gu');
+console.log (JSON.stringify ("AaĀā#*0❤🇦愛爱애💜".match (customRegex)));
 // -> ["❤","💜"]
 ```
 
@@ -94,13 +114,13 @@ console.log (JSON.stringify ("AaĀā❤愛爱애💜".match (emojiAllRegex)));
 const emojiPatterns = require ('emoji-patterns');
 const emojiAllRegex = new RegExp (emojiPatterns["Emoji_All"], 'gu');
 const emojiKeyboardRegex = new RegExp ('^' + emojiPatterns["Emoji_Keyboard"] + '$', 'u');
-let emojiList = "AaĀā❤愛爱애💜".match (emojiAllRegex);
+let emojiList = "AaĀā#*0❤🇦愛爱애💜".match (emojiAllRegex);
 if (emojiList)
 {
     emojiList = emojiList.filter (emoji => emojiKeyboardRegex.test (emoji));
 }
 console.log (JSON.stringify (emojiList));
-// -> ["💜"]
+// -> ["🇦","💜"]
 ```
 
 ### Removing all emoji from a string
@@ -108,7 +128,7 @@ console.log (JSON.stringify (emojiList));
 ```javascript
 const emojiPatterns = require ('emoji-patterns');
 const emojiAllRegex = new RegExp (emojiPatterns["Emoji_All"], 'gu');
-console.log (JSON.stringify ("AaĀā❤愛爱애💜".replace (emojiAllRegex, "")));
+console.log (JSON.stringify ("AaĀā#*0❤🇦愛爱애💜".replace (emojiAllRegex, "")));
 // -> "AaĀā愛爱애"
 ```
 
