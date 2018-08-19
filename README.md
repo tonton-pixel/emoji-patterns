@@ -50,7 +50,7 @@ emojiPatterns["Emoji_All"] = emojiPatterns["Emoji_Keyboard"].replace (/(\\u{FE0F
 ```
 ### Notes
 
-- The order of the basic patterns in the compound patterns is critical. Since a regular expression is greedy by default, the longest patterns must come first. The same strategy is also used when generating the **Emoji_ZWJ_Sequence** pattern itself.
+- The order of the basic patterns in the compound patterns is critical. Since a regular expression engine is *eager* and stops searching as soon as it finds a valid match (i.e., it always returns the leftmost match), the longest patterns must come first. The same strategy is also used when generating the **Emoji_ZWJ_Sequence** pattern itself.
 
 - In the compound patterns, `${Emoji_Modifier_Base}${Emoji_Modifier}` can be replaced by `${Emoji_Modifier_Sequence}` which is strictly equivalent (but more verbose).
 
