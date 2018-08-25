@@ -102,7 +102,7 @@ console.log (JSON.stringify ("AaĀā#*0❤🇦愛爱애💜".match (emojiAllRege
 
 ```javascript
 const emojiAllPattern = require ('emoji-patterns')["Emoji_All"];
-const customPattern = emojiAllPattern.replace (/\\u\{23\}\\u\{2A\}\\u\{30\}-\\u\{39\}|\\u\{1F1E6\}-\\u\{1F1FF\}/gi, "");
+const customPattern = emojiAllPattern.replace (/\\u0023\\u002A\\u0030-\\u0039|\\u\{1F1E6\}-\\u\{1F1FF\}/gi, "");
 const customRegex = new RegExp (customPattern, 'gu');
 console.log (JSON.stringify ("AaĀā#*0❤🇦愛爱애💜".match (customRegex)));
 // -> ["❤","💜"]
