@@ -46,7 +46,7 @@ function parseData ()
     function unicodeEscape (num)
     {
         let hex = num.toString (16).toUpperCase ();
-        return (num > 0xFFFF) ? `\\u{${hex}}` : `\\u${("000" + hex).slice (-4)}`;
+        return (num > 0xFFFF) ? `\\u{${hex}}` : `\\u${('000' + hex).slice (-4)}`;
     }
     //
     for (let pattern in dataPatterns)
@@ -72,7 +72,7 @@ function parseData ()
                     }
                     else
                     {
-                        set.push (unicodeEscape (first) + ((last !== first) ? "-" + unicodeEscape (last) : ""));
+                        set.push (unicodeEscape (first) + ((last !== first) ? '-' + unicodeEscape (last) : ''));
                         first = code;
                         last = code;
                     }
@@ -81,7 +81,7 @@ function parseData ()
         );
         if (first)
         {
-            set.push (unicodeEscape (first) + ((last !== first) ? "-" + unicodeEscape (last) : ""));
+            set.push (unicodeEscape (first) + ((last !== first) ? '-' + unicodeEscape (last) : ''));
         }
         result[pattern] = '[' + set.join ('') + ']';
     }
@@ -167,7 +167,7 @@ const
 // Keyboard emoji only (fully-qualified)
 emojiPatterns["Emoji_Keyboard"] = `(?:${Emoji_ZWJ_Sequence}|${Emoji_Keycap_Sequence}|${Emoji_Flag_Sequence}|${Emoji_Tag_Sequence}|${Emoji_Modifier_Base}${Emoji_Modifier}|${Emoji_Presentation}|${Emoji}\\u{FE0F})`;
 // All emoji (U+FE0F optional)
-emojiPatterns["Emoji_All"] = emojiPatterns["Emoji_Keyboard"].replace (/(\\u{FE0F}|\\uFE0F)/gi, "$1?");
+emojiPatterns["Emoji_All"] = emojiPatterns["Emoji_Keyboard"].replace (/(\\u{FE0F}|\\uFE0F)/gi, '$1?');
 //
 module.exports = emojiPatterns;
 //

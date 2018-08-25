@@ -46,7 +46,7 @@ const
 // Keyboard emoji only (fully-qualified)
 emojiPatterns["Emoji_Keyboard"] = `(?:${Emoji_ZWJ_Sequence}|${Emoji_Keycap_Sequence}|${Emoji_Flag_Sequence}|${Emoji_Tag_Sequence}|${Emoji_Modifier_Base}${Emoji_Modifier}|${Emoji_Presentation}|${Emoji}\\u{FE0F})`;
 // All emoji (U+FE0F optional)
-emojiPatterns["Emoji_All"] = emojiPatterns["Emoji_Keyboard"].replace (/(\\u{FE0F}|\\uFE0F)/gi, "$1?");
+emojiPatterns["Emoji_All"] = emojiPatterns["Emoji_Keyboard"].replace (/(\\u{FE0F}|\\uFE0F)/gi, '$1?');
 ```
 ### Notes
 
@@ -102,7 +102,7 @@ console.log (JSON.stringify ("AaĀā#*0❤🇦愛爱애💜".match (emojiAllRege
 
 ```javascript
 const emojiAllPattern = require ('emoji-patterns')["Emoji_All"];
-const customPattern = emojiAllPattern.replace (/\\u0023\\u002A\\u0030-\\u0039|\\u\{1F1E6\}-\\u\{1F1FF\}/gi, "");
+const customPattern = emojiAllPattern.replace (/\\u0023\\u002A\\u0030-\\u0039|\\u\{1F1E6\}-\\u\{1F1FF\}/gi, '');
 const customRegex = new RegExp (customPattern, 'gu');
 console.log (JSON.stringify ("AaĀā#*0❤🇦愛爱애💜".match (customRegex)));
 // -> ["❤","💜"]
