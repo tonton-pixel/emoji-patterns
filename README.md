@@ -141,7 +141,7 @@ console.log (JSON.stringify ("AaĀā#*0❤🇦愛爱애💜".replace (emojiAllRe
 
 - The regular expressions *must* include a 'u' flag, since the patterns make use of the new type of Unicode escape sequences: `\u{1F4A9}`.
 
-- The two main regular expression patterns **Emoji_All** and **Emoji_Keyboard** are pretty big, around 40Kb each...
+- The two main regular expression patterns **Emoji_All** and **Emoji_Keyboard** are pretty big, around 36KB each...
 
 ## License
 

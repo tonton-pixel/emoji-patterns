@@ -43,6 +43,12 @@ function parseData ()
         }
     }
     //
+    function unicodeEscape (num)
+    {
+        let hex = num.toString (16).toUpperCase ();
+        return (num > 0xFFFF) ? `\\u{${hex}}` : `\\u${("000" + hex).slice (-4)}`;
+    }
+    //
     for (let pattern in dataPatterns)
     {
         let codes = dataPatterns[pattern];
@@ -66,7 +72,7 @@ function parseData ()
                     }
                     else
                     {
-                        set.push (`\\u{${first.toString (16).toUpperCase ()}}` + ((last !== first) ? `-\\u{${last.toString (16).toUpperCase ()}}` : ``));
+                        set.push (unicodeEscape (first) + ((last !== first) ? "-" + unicodeEscape (last) : ""));
                         first = code;
                         last = code;
                     }
@@ -75,7 +81,7 @@ function parseData ()
         );
         if (first)
         {
-            set.push (`\\u{${first.toString (16).toUpperCase ()}}` + ((last !== first) ? `-\\u{${last.toString (16).toUpperCase ()}}` : ``));
+            set.push (unicodeEscape (first) + ((last !== first) ? "-" + unicodeEscape (last) : ""));
         }
         result[pattern] = '[' + set.join ('') + ']';
     }
@@ -104,7 +110,7 @@ function parseData ()
     {
         let emojiCodes = sequencesPatterns[pattern].map
         (
-            emoji => Array.from (emoji).map (char => `\\u{${char.codePointAt (0).toString (16).toUpperCase ()}}`).join ('')
+            emoji => Array.from (emoji).map (char => unicodeEscape (char.codePointAt (0))).join ('')
         );
         result[pattern] = '(?:' + emojiCodes.join ('|') + ')';
     }
@@ -133,7 +139,7 @@ function parseData ()
     {
         let emojiCodes = zwjSequencesPatterns[pattern].sort ().reverse ().map
         (
-            emoji => Array.from (emoji).map (char => `\\u{${char.codePointAt (0).toString (16).toUpperCase ()}}`).join ('')
+            emoji => Array.from (emoji).map (char => unicodeEscape (char.codePointAt (0))).join ('')
         );
         result[pattern] = '(?:' + emojiCodes.join ('|') + ')';
     }

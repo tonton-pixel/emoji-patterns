@@ -1,6 +1,6 @@
 {
   "name": "emoji-patterns",
-  "version": "11.1.3",
+  "version": "11.2.0",
   "description": "Get emoji regular expression patterns from Unicode data files",
   "main": "index.js",
   "scripts": {
