@@ -44,7 +44,7 @@ const
 
 ```javascript
 // Keyboard emoji only (fully-qualified)
-emojiPatterns["Emoji_Keyboard"] = `(?:${Emoji_ZWJ_Sequence}|${Emoji_Keycap_Sequence}|${Emoji_Flag_Sequence}|${Emoji_Tag_Sequence}|${Emoji_Modifier_Base}${Emoji_Modifier}|${Emoji_Presentation}|${Emoji}\\u{FE0F})`;
+emojiPatterns["Emoji_Keyboard"] = `(?:${Emoji_ZWJ_Sequence}|${Emoji_Keycap_Sequence}|${Emoji_Flag_Sequence}|${Emoji_Tag_Sequence}|${Emoji_Modifier_Base}${Emoji_Modifier}|${Emoji_Presentation}|${Emoji}\\uFE0F)`;
 // All emoji (U+FE0F optional)
 emojiPatterns["Emoji_All"] = emojiPatterns["Emoji_Keyboard"].replace (/(\\u{FE0F}|\\uFE0F)/gi, '$1?');
 ```
@@ -94,8 +94,8 @@ console.log (emojiKeyboardRegex.test ("❤"));
 ```javascript
 const emojiPatterns = require ('emoji-patterns');
 const emojiAllRegex = new RegExp (emojiPatterns["Emoji_All"], 'gu');
-console.log (JSON.stringify ("AaĀā#*0❤🇦愛爱애💜".match (emojiAllRegex)));
-// -> ["#","*","0","❤","🇦","💜"]
+console.log (JSON.stringify ("AaĀā#*0❤🇦愛爱❤️애💜".match (emojiAllRegex)));
+// -> ["#","*","0","❤","🇦","❤️","💜"]
 ```
 
 ### Extracting all emoji from a string, except keycap bases and singleton regional indicators
@@ -104,8 +104,8 @@ console.log (JSON.stringify ("AaĀā#*0❤🇦愛爱애💜".match (emojiAllRege
 const emojiAllPattern = require ('emoji-patterns')["Emoji_All"];
 const customPattern = emojiAllPattern.replace (/\\u0023\\u002A\\u0030-\\u0039|\\u\{1F1E6\}-\\u\{1F1FF\}/gi, '');
 const customRegex = new RegExp (customPattern, 'gu');
-console.log (JSON.stringify ("AaĀā#*0❤🇦愛爱애💜".match (customRegex)));
-// -> ["❤","💜"]
+console.log (JSON.stringify ("AaĀā#*0❤🇦愛爱❤️애💜".match (customRegex)));
+// -> ["❤","❤️","💜"]
 ```
 
 ### Extracting all fully-qualified (keyboard) emoji from a string
@@ -114,13 +114,13 @@ console.log (JSON.stringify ("AaĀā#*0❤🇦愛爱애💜".match (customRegex)
 const emojiPatterns = require ('emoji-patterns');
 const emojiAllRegex = new RegExp (emojiPatterns["Emoji_All"], 'gu');
 const emojiKeyboardRegex = new RegExp ('^' + emojiPatterns["Emoji_Keyboard"] + '$', 'u');
-let emojiList = "AaĀā#*0❤🇦愛爱애💜".match (emojiAllRegex);
+let emojiList = "AaĀā#*0❤🇦愛爱❤️애💜".match (emojiAllRegex);
 if (emojiList)
 {
     emojiList = emojiList.filter (emoji => emojiKeyboardRegex.test (emoji));
 }
 console.log (JSON.stringify (emojiList));
-// -> ["🇦","💜"]
+// -> ["🇦","❤️","💜"]
 ```
 
 ### Removing all emoji from a string
@@ -128,7 +128,7 @@ console.log (JSON.stringify (emojiList));
 ```javascript
 const emojiPatterns = require ('emoji-patterns');
 const emojiAllRegex = new RegExp (emojiPatterns["Emoji_All"], 'gu');
-console.log (JSON.stringify ("AaĀā#*0❤🇦愛爱애💜".replace (emojiAllRegex, "")));
+console.log (JSON.stringify ("AaĀā#*0❤🇦愛爱❤️애💜".replace (emojiAllRegex, "")));
 // -> "AaĀā愛爱애"
 ```
 
