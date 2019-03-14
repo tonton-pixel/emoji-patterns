@@ -1,7 +1,7 @@
 {
   "name": "emoji-patterns",
-  "version": "11.2.2",
-  "description": "Get emoji regular expression patterns from Unicode data files",
+  "version": "12.0.0",
+  "description": "Get emoji regular expression patterns from Unicode 12.0 data files",
   "main": "index.js",
   "scripts": {
     "test": "node test.js"
@@ -22,9 +22,8 @@
     "regexp",
     "unicode",
     "keyboard",
-    "display",
     "fully-qualified",
-    "non-fully-qualified"
+    "component"
   ],
   "author": "Michel MARIANI",
   "license": "MIT"

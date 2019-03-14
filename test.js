@@ -1,7 +1,8 @@
+//
 const emojiPatterns = require ('.');
 //
 // List emoji pattern names
-console.log (Object.keys (emojiPatterns));
+console.log (Object.keys (emojiPatterns).sort ());
 console.log ("");
 //
 // Define a test string

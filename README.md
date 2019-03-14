@@ -8,6 +8,7 @@ This Node module returns a JSON-compatible object literal containing both basic 
 
 The following patterns are generated using the information parsed from the Unicode emoji data files `emoji-data.txt`, `emoji-sequences.txt` and `emoji-zwj-sequences.txt`:
 
+- **Basic_Emoji**
 - **Emoji**
 - **Emoji_Component**
 - **Emoji_Flag_Sequence**
@@ -28,6 +29,7 @@ These basic patterns are then used to generate two more complex compound pattern
 ```javascript
 const
 {
+    Basic_Emoji,
     Emoji,
     Emoji_Component,
     Emoji_Flag_Sequence,
@@ -43,16 +45,19 @@ const
 ````
 
 ```javascript
-// Keyboard emoji only (fully-qualified)
+// Keyboard emoji only (fully-qualified and components)
 emojiPatterns["Emoji_Keyboard"] = `(?:${Emoji_ZWJ_Sequence}|${Emoji_Keycap_Sequence}|${Emoji_Flag_Sequence}|${Emoji_Tag_Sequence}|${Emoji_Modifier_Base}${Emoji_Modifier}|${Emoji_Presentation}|${Emoji}\\uFE0F)`;
 // All emoji (U+FE0F optional)
 emojiPatterns["Emoji_All"] = emojiPatterns["Emoji_Keyboard"].replace (/(\\u{FE0F}|\\uFE0F)/gi, '$1?');
 ```
+
 ### Notes
 
 - The order of the basic patterns in the compound patterns is critical. Since a regular expression engine is *eager* and stops searching as soon as it finds a valid match (i.e., it always returns the leftmost match), the longest patterns must come first. The same strategy is also used when generating the **Emoji_ZWJ_Sequence** pattern itself.
 
 - In the compound patterns, `${Emoji_Modifier_Base}${Emoji_Modifier}` can be replaced by `${Emoji_Modifier_Sequence}` which is strictly equivalent (but more verbose).
+
+- Likewise, `${Emoji_Presentation}|${Emoji}\\uFE0F` could be replaced by `${Basic_Emoji}` (which should actually be called `${Basic_Emoji_Sequence}` for the sake of consistency), but the latter is more restrictive since it only contains the 5 skin tone and 4 hairstyle components, excluding the 12 keycap bases and the 26 singleton regional indicators.
 
 - Providing patterns as strings instead of regular expressions does require the extra step of using `new RegExp ()` to actually make use of them, but it has two main advantages:
 
@@ -78,7 +83,7 @@ npm test
 
 ## Examples
 
-### Testing whether an emoji is fully-qualified (keyboard) or non-fully-qualified (display)
+### Testing whether an emoji has a keyboard status or not
 
 ```javascript
 const emojiPatterns = require ('emoji-patterns');
@@ -101,14 +106,15 @@ console.log (JSON.stringify ("AaĀā#*0❤🇦愛爱❤️애💜".match (emojiA
 ### Extracting all emoji from a string, except keycap bases and singleton regional indicators
 
 ```javascript
-const emojiAllPattern = require ('emoji-patterns')["Emoji_All"];
+const emojiPatterns = require ('emoji-patterns');
+const emojiAllPattern = emojiPatterns["Emoji_All"];
 const customPattern = emojiAllPattern.replace (/\\u0023\\u002A\\u0030-\\u0039|\\u\{1F1E6\}-\\u\{1F1FF\}/gi, '');
 const customRegex = new RegExp (customPattern, 'gu');
 console.log (JSON.stringify ("AaĀā#*0❤🇦愛爱❤️애💜".match (customRegex)));
 // -> ["❤","❤️","💜"]
 ```
 
-### Extracting all fully-qualified (keyboard) emoji from a string
+### Extracting all keyboard-status emoji from a string
 
 ```javascript
 const emojiPatterns = require ('emoji-patterns');
@@ -141,10 +147,10 @@ console.log (JSON.stringify ("AaĀā#*0❤🇦愛爱❤️애💜".replace (emoj
 
 - The regular expressions *must* include a 'u' flag, since the patterns make use of the new type of Unicode escape sequences: `\u{1F4A9}`.
 
-- The two main regular expression patterns **Emoji_All** and **Emoji_Keyboard** are pretty big, around 36KB each...
+- The two main regular expression patterns **Emoji_All** and **Emoji_Keyboard** are pretty big, around 42KB each...
 
 ## License
 
 The MIT License (MIT).
 
-Copyright © 2018 Michel MARIANI.
+Copyright © 2018-2019 Michel MARIANI.
