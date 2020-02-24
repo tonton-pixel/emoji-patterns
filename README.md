@@ -6,20 +6,20 @@ This Node module returns a JSON-compatible object literal containing both basic 
 
 ## Available Patterns
 
-The following patterns are generated using the information parsed from the Emoji 12.1 data files `emoji-data.txt`, `emoji-sequences.txt` and `emoji-zwj-sequences.txt`:
+The following patterns are generated using the information parsed from the Emoji 13.0 data files [emoji-data.txt](https://www.unicode.org/Public/13.0.0/ucd/emoji/emoji-data.txt), [emoji-sequences.txt](https://unicode.org/Public/emoji/13.0/emoji-sequences.txt) and [emoji-zwj-sequences.txt](https://unicode.org/Public/emoji/13.0/emoji-zwj-sequences.txt):
 
 - **Basic_Emoji**
 - **Emoji**
 - **Emoji_Component**
-- **Emoji_Flag_Sequence**
 - **Emoji_Keycap_Sequence**
 - **Emoji_Modifier**
 - **Emoji_Modifier_Base**
-- **Emoji_Modifier_Sequence**
 - **Emoji_Presentation**
-- **Emoji_Tag_Sequence**
-- **Emoji_ZWJ_Sequence**
 - **Extended_Pictographic**
+- **RGI_Emoji_Flag_Sequence**
+- **RGI_Emoji_Modifier_Sequence**
+- **RGI_Emoji_Tag_Sequence**
+- **RGI_Emoji_ZWJ_Sequence**
 
 These basic patterns are then used to generate two more complex compound patterns:
 
@@ -32,30 +32,30 @@ const
     Basic_Emoji,
     Emoji,
     Emoji_Component,
-    Emoji_Flag_Sequence,
     Emoji_Keycap_Sequence,
     Emoji_Modifier,
     Emoji_Modifier_Base,
-    Emoji_Modifier_Sequence,
     Emoji_Presentation,
-    Emoji_Tag_Sequence,
-    Emoji_ZWJ_Sequence,
-    Extended_Pictographic
+    Extended_Pictographic,
+    RGI_Emoji_Flag_Sequence,
+    RGI_Emoji_Modifier_Sequence,
+    RGI_Emoji_Tag_Sequence,
+    RGI_Emoji_ZWJ_Sequence
 } = emojiPatterns;
 ````
 
 ```javascript
 // Keyboard emoji only (fully-qualified and components)
-emojiPatterns["Emoji_Keyboard"] = `(?:${Emoji_ZWJ_Sequence}|${Emoji_Keycap_Sequence}|${Emoji_Flag_Sequence}|${Emoji_Tag_Sequence}|${Emoji_Modifier_Base}${Emoji_Modifier}|${Emoji_Presentation}|${Emoji}\\uFE0F)`;
+emojiPatterns["Emoji_Keyboard"] = `(?:${RGI_Emoji_ZWJ_Sequence}|${Emoji_Keycap_Sequence}|${RGI_Emoji_Flag_Sequence}|${RGI_Emoji_Tag_Sequence}|${Emoji_Modifier_Base}${Emoji_Modifier}|${Emoji_Presentation}|${Emoji}\\uFE0F)`;
 // All emoji (U+FE0F optional)
 emojiPatterns["Emoji_All"] = emojiPatterns["Emoji_Keyboard"].replace (/(\\u{FE0F}|\\uFE0F)/gi, '$1?');
 ```
 
 ### Notes
 
-- The order of the basic patterns in the compound patterns is critical. Since a regular expression engine is *eager* and stops searching as soon as it finds a valid match (i.e., it always returns the leftmost match), the longest patterns must come first. The same strategy is also used when generating the **Emoji_ZWJ_Sequence** pattern itself.
+- The order of the basic patterns in the compound patterns is critical. Since a regular expression engine is *eager* and stops searching as soon as it finds a valid match (i.e., it always returns the leftmost match), the longest patterns must come first. The same strategy is also used when generating the **RGI_Emoji_ZWJ_Sequence** pattern itself.
 
-- In the compound patterns, `${Emoji_Modifier_Base}${Emoji_Modifier}` can be replaced by `${Emoji_Modifier_Sequence}` which is strictly equivalent (but more verbose).
+- In the compound patterns, `${Emoji_Modifier_Base}${Emoji_Modifier}` can be replaced by `${RGI_Emoji_Modifier_Sequence}` which is strictly equivalent (but more verbose).
 
 - Likewise, `${Emoji_Presentation}|${Emoji}\\uFE0F` could be replaced by `${Basic_Emoji}` (which should actually be called `${Basic_Emoji_Sequence}` for the sake of consistency), but the latter is more restrictive since it only contains the 5 skin tone and 4 hairstyle components, excluding the 12 keycap bases and the 26 singleton regional indicators.
 
@@ -140,17 +140,17 @@ console.log (JSON.stringify ("AaĀā#*0❤🇦愛爱❤️애💜".replace (emoj
 
 ## Caveats
 
-- The basic patterns strictly follow the information extracted from the data files. Therefore, the following characters are considered **Emoji** in the `emoji-data.txt` file, although they are omitted in the `emoji-test.txt` file, as well as in the CLDR annotation files provided in XML format:
+- The basic patterns strictly follow the information extracted from the data files. Therefore, the following characters are considered **Emoji** in the [emoji-data.txt](https://www.unicode.org/Public/13.0.0/ucd/emoji/emoji-data.txt) file, although they are omitted in the [emoji-test.txt](https://unicode.org/Public/emoji/13.0/emoji-test.txt) file, as well as in the CLDR annotation files provided in XML format:
 
     - 12 keycap bases: number sign '#', asterisk '*', digits '0' to '9'
     - 26 singleton regional indicators: '🇦' to '🇿'
 
 - The regular expressions *must* include a 'u' flag, since the patterns make use of the new type of Unicode escape sequences: `\u{1F4A9}`.
 
-- The two main regular expression patterns **Emoji_All** and **Emoji_Keyboard** are pretty big, around 48KB each...
+- The two main regular expression patterns **Emoji_All** and **Emoji_Keyboard** are pretty big, around 50KB each...
 
 ## License
 
 The MIT License (MIT).
 
-Copyright © 2018-2019 Michel MARIANI.
+Copyright © 2018-2020 Michel MARIANI.

@@ -120,9 +120,9 @@ function parseSequences (filename, result)
 //
 // https://www.unicode.org/reports/tr51/
 //
-// Copy of https://unicode.org/Public/emoji/12.1/emoji-data.txt
-// Copy of https://unicode.org/Public/emoji/12.1/emoji-sequences.txt
-// Copy of https://unicode.org/Public/emoji/12.1/emoji-zwj-sequences.txt
+// Copy of https://www.unicode.org/Public/13.0.0/ucd/emoji/emoji-data.txt
+// Copy of https://unicode.org/Public/emoji/13.0/emoji-sequences.txt
+// Copy of https://unicode.org/Public/emoji/13.0/emoji-zwj-sequences.txt
 //
 function parseData ()
 {
@@ -140,19 +140,19 @@ const
     Basic_Emoji,
     Emoji,
     Emoji_Component,
-    Emoji_Flag_Sequence,
     Emoji_Keycap_Sequence,
     Emoji_Modifier,
     Emoji_Modifier_Base,
-    Emoji_Modifier_Sequence,
     Emoji_Presentation,
-    Emoji_Tag_Sequence,
-    Emoji_ZWJ_Sequence,
-    Extended_Pictographic
+    Extended_Pictographic,
+    RGI_Emoji_Flag_Sequence,
+    RGI_Emoji_Modifier_Sequence,
+    RGI_Emoji_Tag_Sequence,
+    RGI_Emoji_ZWJ_Sequence
 } = emojiPatterns;
 //
 // Keyboard emoji only (fully-qualified and components)
-emojiPatterns["Emoji_Keyboard"] = `(?:${Emoji_ZWJ_Sequence}|${Emoji_Keycap_Sequence}|${Emoji_Flag_Sequence}|${Emoji_Tag_Sequence}|${Emoji_Modifier_Base}${Emoji_Modifier}|${Emoji_Presentation}|${Emoji}\\uFE0F)`;
+emojiPatterns["Emoji_Keyboard"] = `(?:${RGI_Emoji_ZWJ_Sequence}|${Emoji_Keycap_Sequence}|${RGI_Emoji_Flag_Sequence}|${RGI_Emoji_Tag_Sequence}|${Emoji_Modifier_Base}${Emoji_Modifier}|${Emoji_Presentation}|${Emoji}\\uFE0F)`;
 // All emoji (U+FE0F optional)
 emojiPatterns["Emoji_All"] = emojiPatterns["Emoji_Keyboard"].replace (/(\\u{FE0F}|\\uFE0F)/gi, '$1?');
 //
