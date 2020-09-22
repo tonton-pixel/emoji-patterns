@@ -21,3 +21,11 @@ console.log ("");
 console.log (testString.replace (emojiRegex, ""));
 console.log ("");
 //
+const testIssueString = "👩‍⚕️";
+console.log (testString);
+console.log ("");
+//
+// List all emoji in the test issue string
+console.log (testIssueString.match (emojiRegex));
+console.log ("");
+//

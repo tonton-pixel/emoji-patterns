@@ -121,8 +121,8 @@ function parseSequences (filename, result)
 // https://www.unicode.org/reports/tr51/
 //
 // Copy of https://www.unicode.org/Public/13.0.0/ucd/emoji/emoji-data.txt
-// Copy of https://unicode.org/Public/emoji/13.0/emoji-sequences.txt
-// Copy of https://unicode.org/Public/emoji/13.0/emoji-zwj-sequences.txt
+// Copy of https://unicode.org/Public/emoji/13.1/emoji-sequences.txt
+// Copy of https://unicode.org/Public/emoji/13.1/emoji-zwj-sequences.txt
 //
 function parseData ()
 {

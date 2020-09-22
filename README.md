@@ -6,7 +6,7 @@ This Node module returns a JSON-compatible object literal containing both basic 
 
 ## Available Patterns
 
-The following patterns are generated using the information parsed from the Emoji 13.0 data files [emoji-data.txt](https://www.unicode.org/Public/13.0.0/ucd/emoji/emoji-data.txt), [emoji-sequences.txt](https://unicode.org/Public/emoji/13.0/emoji-sequences.txt) and [emoji-zwj-sequences.txt](https://unicode.org/Public/emoji/13.0/emoji-zwj-sequences.txt):
+The following patterns are generated using the information parsed from the Emoji 13.1 data files [emoji-data.txt](https://www.unicode.org/Public/13.0.0/ucd/emoji/emoji-data.txt), [emoji-sequences.txt](https://unicode.org/Public/emoji/13.1/emoji-sequences.txt) and [emoji-zwj-sequences.txt](https://unicode.org/Public/emoji/13.1/emoji-zwj-sequences.txt):
 
 - **Basic_Emoji**
 - **Emoji**
@@ -140,14 +140,14 @@ console.log (JSON.stringify ("AaĀā#*0❤🇦愛爱❤️애💜".replace (emoj
 
 ## Caveats
 
-- The basic patterns strictly follow the information extracted from the data files. Therefore, the following characters are considered **Emoji** in the [emoji-data.txt](https://www.unicode.org/Public/13.0.0/ucd/emoji/emoji-data.txt) file, although they are omitted in the [emoji-test.txt](https://unicode.org/Public/emoji/13.0/emoji-test.txt) file, as well as in the CLDR annotation files provided in XML format:
+- The basic patterns strictly follow the information extracted from the data files. Therefore, the following characters are considered **Emoji** in the [emoji-data.txt](https://www.unicode.org/Public/13.0.0/ucd/emoji/emoji-data.txt) file, although they are omitted in the [emoji-test.txt](https://unicode.org/Public/emoji/13.1/emoji-test.txt) file, as well as in the CLDR annotation files provided in XML format:
 
     - 12 keycap bases: number sign '#', asterisk '*', digits '0' to '9'
     - 26 singleton regional indicators: '🇦' to '🇿'
 
 - The regular expressions *must* include a 'u' flag, since the patterns make use of the new type of Unicode escape sequences: `\u{1F4A9}`.
 
-- The two main regular expression patterns **Emoji_All** and **Emoji_Keyboard** are pretty big, around 50KB each...
+- The two main regular expression patterns **Emoji_All** and **Emoji_Keyboard** are pretty big, around 65KB each...
 
 ## License
 
